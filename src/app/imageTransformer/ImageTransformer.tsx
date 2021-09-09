@@ -88,6 +88,7 @@ export const ImageTransformer: FC = () => {
     setSelectedImages,
     update
   };
+  const RouterWorkaround = Router as any;
 
   return (
     <Suspense fallback={<Loading />}>
@@ -95,10 +96,10 @@ export const ImageTransformer: FC = () => {
         <CustomElementContext.Provider value={customElementContext}>
           {!available && <Loading />}
           {available && (
-            <Router>
+            <RouterWorkaround>
               <Listing default path='/' />
               <Editor path='/:index/:id' />
-            </Router>
+            </RouterWorkaround>
           )}
         </CustomElementContext.Provider>
       </ErrorBoundary>

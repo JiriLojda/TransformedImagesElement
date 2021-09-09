@@ -1,0 +1,522 @@
+@charset "UTF-8";
+@import url("./custom-element.scss");
+html,
+body,
+#root,
+#root > div {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+}
+
+.imageListing .selectionBar,
+.imageEditor .selectionBar {
+  display: flex;
+  margin: 0 0.5em;
+  flex-direction: row;
+  align-items: center;
+}
+.imageListing .selectionBar .imageUploaderMessage,
+.imageEditor .selectionBar .imageUploaderMessage {
+  margin-left: 0.5em;
+  font-size: 0.9em;
+  color: #9e9e9e;
+}
+.imageListing .selectionBar .spacer,
+.imageEditor .selectionBar .spacer {
+  flex: 1;
+}
+.imageListing .selectionBar button,
+.imageEditor .selectionBar button {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.imageListing .selectionBar .switch-wrapper,
+.imageEditor .selectionBar .switch-wrapper {
+  margin-right: 0.5em;
+}
+.imageListing .selectionBar .urlInput,
+.imageEditor .selectionBar .urlInput {
+  width: initial;
+  flex: 1;
+  margin-right: 0.5em;
+  direction: rtl;
+}
+
+.imageListing .list {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: calc(600px + 3em);
+  overflow-x: hidden;
+}
+.imageListing .list .imageListingWrapper {
+  width: calc(100% / 3 - 1em);
+  margin: 0.5em;
+}
+.imageListing .list .imageListingWrapper .imageListing {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  border: 2px solid #d0cfce;
+  border-radius: 2px;
+  transition: all 0.15s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+.imageListing .list .imageListingWrapper .imageListing.selected {
+  outline: 0.2em solid #0a68f5;
+  box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.2);
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingActionsPane {
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  cursor: default;
+  background-color: rgba(245, 245, 245, 0.85);
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingActionsPane .imageListingAction i {
+  padding: 0.5em 0.6em;
+  font-size: 1em;
+  color: #424242;
+  cursor: pointer;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingActionsPane .imageListingAction.imageListingActionAddParams i:hover {
+  color: #fff;
+  background-color: #ffc800;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingActionsPane .imageListingAction.imageListingActionDownload i:hover {
+  color: #fff;
+  background-color: #0749ab;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingActionsPane .imageListingAction.imageListingActionRemove i:hover {
+  color: #fff;
+  background-color: #f02222;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingActionsPane .imageListingAction .icon-add-params:before {
+  content: "\e73e";
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingPreview {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 200px;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingPreview img.imageListingImage {
+  max-width: 100%;
+  max-height: 100%;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  background-color: rgba(245, 245, 245, 0.8);
+  border-bottom-right-radius: 0.1em;
+  border-bottom-left-radius: 0.1em;
+  transition: all 0.15s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  padding: 0.5em;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingBottom .imageDetailsSummary {
+  min-width: 0;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingBottom .imageDetailsSummary .imageDetailsTitle {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.25em;
+  font-size: 0.9em;
+  line-height: 1.25;
+  word-wrap: break-word;
+  white-space: nowrap;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingBottom .imageDetailsSummary .imageDetailsTitle .imageDetailsName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingBottom .imageDetailsSummary .imageDetailsTitle .imageDetailsName:hover {
+  overflow: visible;
+  white-space: normal;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingBottom .imageDetailsSummary .imageDetailsTitle .imageDetailsName .imageDetailsFileName {
+  color: #424242;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingBottom .imageDetailsSummary .imageDetailsTechDetails {
+  display: block;
+  font-size: 0.8em;
+  line-height: 1.1;
+  opacity: 1;
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingBottom .imageDetailsSummary .imageDetailsTechDetails .imageDetailsTechDetail:after {
+  color: #424242;
+  content: " · ";
+}
+.imageListing .list .imageListingWrapper .imageListing .imageListingBottom .imageDetailsSummary .imageDetailsTechDetails .imageDetailsTechDetail:last-of-type:after {
+  content: "";
+}
+
+.imageEditor .editor {
+  display: flex;
+  flex-wrap: wrap;
+  background: #eee;
+}
+.imageEditor .editor .imageEditorPreview {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 400px;
+  flex: 2;
+  overflow: hidden;
+  position: relative;
+}
+.imageEditor .editor .imageEditorPreview .hoverToEdit {
+  position: absolute;
+  color: #757575;
+  width: 100%;
+  background-color: rgba(245, 245, 245, 0.8);
+  text-align: center;
+  padding: 0.5em;
+  bottom: 0;
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper {
+  padding: 1em;
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  display: grid;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  justify-content: space-around;
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  -moz-user-select: none;
+  position: relative;
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  overflow: initial;
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .selectRect {
+  stroke: #013a8f;
+  fill: rgba(255, 255, 255, 0.001);
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .selectRect.draggable {
+  cursor: move;
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .grabCircle {
+  stroke: #013a8f;
+  fill: white;
+  display: none;
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .grabCircle#top, .imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .grabCircle#bottom {
+  cursor: ns-resize;
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .grabCircle#left, .imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .grabCircle#right {
+  cursor: ew-resize;
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .grabCircle#topRight, .imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .grabCircle#bottomLeft {
+  cursor: nesw-resize;
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .grabCircle#topLeft, .imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .grabCircle#bottomRight {
+  cursor: nwse-resize;
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask svg .outsideRect {
+  fill: rgba(255, 255, 255, 0.667);
+}
+.imageEditor .editor .imageEditorPreview .imageWrapper .imageMask .imageEditorImage {
+  box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  max-width: 100%;
+  max-height: 100%;
+}
+.imageEditor .editor .imageEditorPreview:hover .imageWrapper .imageMask svg .grabCircle {
+  display: inline;
+}
+.imageEditor .editor .editorControls {
+  min-height: 100%;
+  flex: 1;
+  background: #fff;
+  padding: 1em 0.5em 1em 0;
+}
+.imageEditor .editor .editorControls .control {
+  padding: 0.5em 0.5em 0.5em 1.2em;
+  border: transparent solid 0.1em;
+  color: #757575;
+}
+.imageEditor .editor .editorControls .control .btn--primary {
+  background-color: #757575;
+}
+.imageEditor .editor .editorControls .control .btn--primary:hover {
+  background-color: #013a8f;
+}
+.imageEditor .editor .editorControls .control.editable {
+  padding-left: 1em;
+  border-left: #9e9e9e solid 0.3em;
+}
+.imageEditor .editor .editorControls .control.editable.selected {
+  border-left: #013a8f solid 0.7em;
+  border-radius: 0 0.15em 0.15em 0;
+  padding-left: 0.6em;
+  color: inherit;
+}
+.imageEditor .editor .editorControls .control.editable.selected .btn--primary {
+  background-color: #0a68f5;
+  transition: none;
+}
+.imageEditor .editor .editorControls .control.editable.selected .fields .input > input + span[title] {
+  color: #013a8f;
+}
+.imageEditor .editor .editorControls .control .modes {
+  display: flex;
+  margin: 0 0 0.5em 0;
+  border: 1px solid #757575;
+  border-radius: 0.15em;
+  overflow: hidden;
+}
+.imageEditor .editor .editorControls .control .modes .mode {
+  margin: 0;
+  min-width: 3em;
+  border: none;
+  flex: 1;
+  border-radius: 0;
+}
+.imageEditor .editor .editorControls .control .modes .mode + .mode {
+  border-left: 1px solid #757575;
+}
+.imageEditor .editor .editorControls .control .fields {
+  display: flex;
+}
+.imageEditor .editor .editorControls .control .fields.vertical {
+  flex-direction: column;
+}
+.imageEditor .editor .editorControls .control .fields .fieldsBlock {
+  flex: 1;
+  display: flex;
+}
+.imageEditor .editor .editorControls .control .fields .fieldsBlock + .fieldsBlock {
+  padding-top: 0.5em;
+}
+.imageEditor .editor .editorControls .control .fields .input {
+  max-width: 50%;
+  display: flex;
+  width: 100%;
+}
+.imageEditor .editor .editorControls .control .fields .input + .input {
+  padding: 0 0 0 0.5em;
+}
+.imageEditor .editor .editorControls .control .fields .input .colorBox {
+  z-index: 1;
+  position: absolute;
+  height: 100%;
+  width: calc(100% - 0.5em);
+}
+.imageEditor .editor .editorControls .control .fields .input .colorBoxBackground {
+  position: absolute;
+  height: 100%;
+  width: calc(100% - 0.5em);
+}
+.imageEditor .editor .editorControls .control .fields .input .picker {
+  position: absolute;
+  right: calc(100% + 0.5em);
+  z-index: 1000;
+  transform: translate(0, -50%);
+}
+.imageEditor .editor .editorControls .control .fields .input .picker .sketch-picker > div:nth-of-type(3) {
+  display: none !important;
+}
+.imageEditor .editor .editorControls .control .fields .input .form__dropdown {
+  color: inherit;
+}
+.imageEditor .editor .editorControls .control .fields .input > input {
+  width: 3.5em;
+  text-align: right;
+  min-width: 3.5em;
+  flex: 1;
+}
+.imageEditor .editor .editorControls .control .fields .input > input:disabled {
+  -webkit-text-fill-color: #9e9e9e;
+  color: #9e9e9e;
+}
+.imageEditor .editor .editorControls .control .fields .input > input:disabled + span {
+  color: #9e9e9e;
+}
+.imageEditor .editor .editorControls .control .fields .input > input + span {
+  padding: 0.375em 0.25em 0 0.25em;
+  margin: 0em;
+}
+.imageEditor .editor .editorControls .control .fields .input > input + span[title] {
+  cursor: pointer;
+}
+.imageEditor .editor .editorControls .control .fields .input > input + span[title]:hover {
+  color: #013a8f;
+}
+.imageEditor .editor .editorControls .control .fields .input > .label {
+  padding: 0.375em 0.25em 0 0.25em;
+  margin: 0em;
+}
+.imageEditor .editor .editorControls .control .fields .input > .label + input {
+  width: 3.5em;
+  text-align: right;
+  min-width: 3.5em;
+  flex: 1;
+}
+
+[data-balloon] {
+  position: relative;
+}
+[data-balloon]:after, [data-balloon]:before {
+  position: absolute;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  font-weight: 400;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1) 50ms;
+  bottom: 100%;
+  left: 50%;
+  z-index: 2400;
+  -webkit-transform: translate(-50%, 10px);
+  transform: translate(-50%, 10px);
+  -webkit-transform-origin: top;
+  transform-origin: top;
+}
+[data-balloon]:after {
+  padding: 0.5em 1em;
+  margin-bottom: 11px;
+  font-size: 14px;
+  color: #fff;
+  white-space: pre;
+  background: #424242;
+  border-radius: 2px;
+  content: attr(data-balloon);
+}
+[data-balloon]:before {
+  width: 18px;
+  height: 6px;
+  background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='12'%3E%3Cpath fill='%23424242' d='M2.658 0h32.004c-6 0-11.627 12.002-16.002 12.002C14.285 12.002 8.594 0 2.658 0z'/%3E%3C/svg%3E") no-repeat;
+  background-size: 100% auto;
+  margin-bottom: 5px;
+  content: "";
+}
+[data-balloon].balloon-displayed:after, [data-balloon].balloon-displayed:before, [data-balloon]:hover:after, [data-balloon]:hover:before {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  pointer-events: auto;
+  -webkit-transform: translate(-50%);
+  transform: translate(-50%);
+}
+[data-balloon][data-balloon-break]:after {
+  white-space: normal;
+}
+[data-balloon].balloon-tethered {
+  min-width: 1px;
+}
+
+[data-balloon=""]:after,
+[data-balloon=""]:before {
+  content: normal;
+}
+
+[data-balloon-pos=down]:after, [data-balloon-pos=down]:before {
+  top: 100%;
+  bottom: auto;
+  left: 50%;
+  margin-bottom: 0;
+  -webkit-transform: translate(-50%, -10px);
+  transform: translate(-50%, -10px);
+}
+[data-balloon-pos=down]:after {
+  margin-top: 11px;
+}
+[data-balloon-pos=down]:before {
+  width: 18px;
+  height: 6px;
+  background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='12'%3E%3Cpath fill='%23424242' d='M33.342 12H1.338c6 0 11.627-12.002 16.002-12.002C21.715-.002 27.406 12 33.342 12z'/%3E%3C/svg%3E") no-repeat;
+  background-size: 100% auto;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+[data-balloon-pos=down].balloon-displayed:after, [data-balloon-pos=down].balloon-displayed:before, [data-balloon-pos=down]:hover:after, [data-balloon-pos=down]:hover:before {
+  -webkit-transform: translate(-50%);
+  transform: translate(-50%);
+}
+
+.invalidUsage {
+  margin: 1em;
+}
+
+.errorBoundary {
+  margin: 1em;
+}
+.errorBoundary span {
+  white-space: pre;
+}
+
+.loadingWrapper {
+  display: flex;
+  height: 100%;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.loadingWrapper .loading {
+  width: 200px;
+  height: 5px;
+  overflow: hidden;
+  background-color: #d0cfce;
+  border-radius: 5px;
+  animation: loader 6.2s ease;
+  transform-origin: 50% 100%;
+}
+.loadingWrapper .loading .bubble {
+  width: 200px;
+  height: 5px;
+  background-color: #0a68f5;
+  animation: bubble 1.7s ease infinite;
+  transform-origin: 0 100%;
+  animation-delay: 0.55s;
+}
+
+@keyframes loader {
+  0% {
+    opacity: 0;
+    transform: translate(0) scaleX(0.01);
+  }
+  10% {
+    opacity: 0.2;
+    transform: translate(0) scaleX(0.01);
+  }
+  14% {
+    opacity: 1;
+    transform: translate(0) scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0) scale(1);
+  }
+}
+@keyframes bubble {
+  0% {
+    transform: translate(-195px);
+  }
+  50% {
+    transform: translate(195px);
+  }
+  to {
+    transform: translate(-195px);
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
